@@ -1,0 +1,4 @@
+﻿requests==2.31.0
+requests-file==1.5.1
+telebot
+flask
