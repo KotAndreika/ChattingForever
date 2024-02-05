@@ -15,10 +15,23 @@ bot = telebot.TeleBot(token)
 keep_alive()
 def get_messages():
     try:
-       response = requests.post(URL)
+        response = requests.post(URL)
+        response.raise_for_status()  # Бросает исключение, если статус ответа - ошибка
     except Exception as e:
-       bot.send_message(-4157560547, f'сообщение не сгенерировалось: {str(e)}')
-    return response.json()
+        bot.send_message(-4157560547, f'сообщение не сгенерировалось: {str(e)}')
+        return None
+
+    try:
+        data = response.json()
+    except ValueError:
+        bot.send_message(-4157560547, f'Ошибка при разборе ответа как JSON')
+        return None
+
+    if not isinstance(data, list) or len(data) != 4:
+        bot.send_message(-4157560547, f'Ответ не в ожидаемом формате')
+        return None
+
+    return data
 
 
 def send_message(sc):
