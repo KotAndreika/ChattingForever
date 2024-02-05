@@ -7,7 +7,8 @@ import os
 from telebot.types import InputMediaPhoto
 from back import keep_alive
 
-
+BOT_TOKEN = os.environ['BOT_TOKEN']
+URL = os.environ['URL']
 s = sched.scheduler(time.time, time.sleep)
 token = BOT_TOKEN
 bot = telebot.TeleBot(token)
